@@ -1,0 +1,27 @@
+{
+    "status":"ok",
+    "result": [
+        {
+          "id": 2,
+          "isActive": true,
+          "balance": "$3,574.18",
+          "picture": "http://placehold.it/32x32",
+          "age": 22,
+          "name": "Webster Griffith",
+          "gender": "male",
+          "email": "webstergriffith@momentia.com",
+          "phone": "+1 (986) 564-3310",
+          "address": "742 Lexington Avenue, Sylvanite, Delaware, 9315",
+          "tags": [
+            "sales",
+            "engineer",
+            "support"
+          ],
+          "friends":[
+            {"id":3,"name":"Kayla Rasmussen"},
+            {"id":4,"name":"Josefa Patel"},
+            {"id":5,"name":"Ruiz Torres"}
+          ]
+        }
+      ]
+}

@@ -1,0 +1,49 @@
+<app>
+  <login if="{!state.isLoggedIn}"></login>
+  <div id="wrapper" if="{state.isLoggedIn}">
+    <sidebar page="{state.page}" on-change="{onPageChanged}"></sidebar>
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+        <top-section></top-section>
+        <div class="container-fluid">
+          <page-dashboard if="{state.page === 'page-dashboard'}"></page-dashboard>
+          <page-list if="{state.page === 'page-list'}"></page-list>
+          <page-details if="{state.page === 'page-details'}"></page-list>
+          <page-settings if="{state.page === 'page-settings'}"></page-settings>
+        </div>
+      </div>
+      <bottom-section></bottom-section>
+    </div>
+  </div>
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <script>
+    export default {
+      state: {
+        isLoggedIn: false,
+        page: 'page-dashboard'
+      },
+      onMounted(props, state) {
+        this.query.select('isLoggedIn').subscribe(val => {
+          this.update({ isLoggedIn: val });
+        });
+        this.query.select('page').subscribe(val => {
+          this.update({ page: val });
+        });
+      }
+    }
+  </script>
+  <style>
+    sidebar {
+      background-color: #224abe;
+    }
+
+    login {
+      width: 100%;
+    }
+  </style>
+</app>

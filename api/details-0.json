@@ -1,0 +1,25 @@
+{
+    "status":"ok",
+    "result": [
+        {
+          "id": 0,
+          "isActive": true,
+          "balance": "$1,961.93",
+          "picture": "http://placehold.it/32x32",
+          "age": 33,
+          "name": "Yesenia Sellers",
+          "gender": "female",
+          "email": "yeseniasellers@momentia.com",
+          "phone": "+1 (847) 522-2078",
+          "address": "322 Leonora Court, Kanauga, Virgin Islands, 5488",
+          "tags": [
+            "marketing",
+            "sales"
+          ],
+          "friends":[
+            {"id":1,"name":"Ewing Oneil"},
+            {"id":2,"name":"Webster Griffith"}
+          ]
+        }
+      ]
+}

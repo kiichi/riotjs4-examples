@@ -1,0 +1,25 @@
+{
+    "status":"ok",
+    "result": [
+        {
+          "id": 3,
+          "isActive": false,
+          "balance": "$3,568.38",
+          "picture": "http://placehold.it/32x32",
+          "age": 37,
+          "name": "Kayla Rasmussen",
+          "gender": "female",
+          "email": "kaylarasmussen@momentia.com",
+          "phone": "+1 (825) 405-3961",
+          "address": "628 Veterans Avenue, Indio, Federated States Of Micronesia, 2808",
+          "tags": [
+            "sales"
+          ],
+          "friends":[
+            {"id":0,"name":"Yesenia Sellers"},
+            {"id":4,"name":"Josefa Patel"},
+            {"id":5,"name":"Ruiz Torres"}
+          ]
+        }
+      ]
+}

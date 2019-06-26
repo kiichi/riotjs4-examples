@@ -1,0 +1,25 @@
+{
+    "status":"ok",
+    "result": [
+        {
+          "id": 4,
+          "isActive": true,
+          "balance": "$2,478.38",
+          "picture": "http://placehold.it/32x32",
+          "age": 20,
+          "name": "Josefa Patel",
+          "gender": "female",
+          "email": "josefapatel@momentia.com",
+          "phone": "+1 (833) 570-3537",
+          "address": "590 Holly Street, Breinigsville, Michigan, 6619",
+          "tags": [
+            "consultant",
+            "database",
+            "engineer"
+          ],
+          "friends":[
+            {"id":0,"name":"Yesenia Sellers"}
+          ]
+        }
+      ]
+}

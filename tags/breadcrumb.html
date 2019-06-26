@@ -1,0 +1,26 @@
+<breadcrumb>
+    <div class="d-sm-flex mb-4">
+        <a if="{state.breadcrumb.length > 0}" href="/#/list/" onclick="{()=>goBack(state.breadcrumb.length)}">List Page</a>
+        <a if="{state.breadcrumb.length == 0}">List Page</a>
+        <span each="{ (item,index) in state.breadcrumb}">
+            <span class="ml-1 mr-1">&gt;</span>
+            <a if="{index < state.breadcrumb.length-1}" href="/#/list/{item.id}" onclick="{()=>goBack(state.breadcrumb.length-1-index)}">{item.name}</a>
+            <a if="{index == state.breadcrumb.length-1}">{item.name}</a>
+        </span>
+    </div>
+    <script>
+        export default {
+            state:{
+                breadcrumb:[]
+            },
+            onMounted(props,state){
+                this.query.select('breadcrumb').subscribe(data => this.update({breadcrumb:data}));
+            },
+            goBack(popCount){
+                this.service.popBreadcrumb(popCount);
+            }
+        }
+    </script>
+    <style>
+    </style>
+</breadcrumb>

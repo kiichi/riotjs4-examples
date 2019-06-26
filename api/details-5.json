@@ -1,0 +1,24 @@
+{
+    "status":"ok",
+    "result": [
+        {
+          "id": 5,
+          "isActive": true,
+          "balance": "$3,888.01",
+          "picture": "http://placehold.it/32x32",
+          "age": 28,
+          "name": "Ruiz Torres",
+          "gender": "male",
+          "email": "ruiztorres@momentia.com",
+          "phone": "+1 (967) 580-3377",
+          "address": "246 Argyle Road, Escondida, Montana, 7900",
+          "tags": [
+            "sales",
+            "consultant"
+          ],
+          "friends":[
+            {"id":3,"name":"Kayla Rasmussen"}
+          ]
+        }
+      ]
+}

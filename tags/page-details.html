@@ -1,0 +1,59 @@
+<page-details>
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-2">
+        <breadcrumb></breadcrumb>
+        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="{()=>alert('not implemented yet')}">
+            <i class="fas fa-star fa-sm {state.item.isActive ? 'text-white-50' : ''}"></i> Acitive</a>
+    </div>
+
+    <!-- Content Row -->
+    <div class="row">
+
+        <!-- Content Column -->
+        <div class="col-lg-12 mb-4">
+            <!-- Project Card Example -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">{state.item.name}</h6>
+                </div>
+                <div class="card-body">
+                    Age: {state.item.age} years old<br/>
+                    Gender: {state.item.gender}<br/>
+                    Email: {state.item.email}<br/>
+                    Phone: {state.item.phone}<br/>
+                    Address: {state.item.address}<br/>
+                    Balance: {state.item.balance}<br/>
+                    Friends: 
+                    <span each="{ (friend,index) in state.item.friends}">
+                        <a href="/#/list/{friend.id}" onclick="{()=>service.pushBreadcrumb(friend.name,friend.id)}" class="ml-1">{friend.name}</a>
+                        <span if="{state.item.friends.length-1 != index}">,</span>
+                    </span>
+                    <br/>
+                    <hr/>
+                    <span each="tag in state.item.tags" class="badge badge-primary mr-2">{tag}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        export default {
+            state: {
+                item:{}
+            },
+            onMounted(props,state){
+                this.query.select('details').subscribe(details=> {
+                    if (details){
+                        this.update({item:details});
+                    }
+                });
+                this.query.select('params').subscribe(params=>{
+                    if (params){
+                        this.service.getDetails(params.id);
+                    }
+                });
+            }
+        }
+    </script>
+    <style>
+    </style>
+</page-details>

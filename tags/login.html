@@ -1,0 +1,84 @@
+<login>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-10 col-lg-12 col-md-9">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-2">Admin App Example</h1>
+                                        <h5>Riot + Akita + Navigo + Axios</h5>
+                                        <br />
+                                    </div>
+                                    <form class="user">
+                                        <div class="form-group">
+                                            <input type="email" id="username" class="form-control form-control-user"
+                                                placeholder="Enter Username (Type Anything)" onkeyup="{inputKeyup}">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" id="password" class="form-control form-control-user"
+                                                placeholder="Enter Password (Type Anything)" onkeyup="{inputKeyup}">
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox small">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck">
+                                                <label class="custom-control-label" for="customCheck">Remember
+                                                    Me</label>
+                                            </div>
+                                        </div>
+
+                                        <button class="btn btn-primary btn-user btn-block" onclick="{loginClicked}">
+                                            Login
+                                        </button>
+                                    </form>
+                                    <hr>
+                                    <label
+                                        class="text-xs font-weight-bold text-danger text-uppercase mb-1">{state.message}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        export default {
+            state: {
+                message: ''
+            },
+            onMounted(props, state) {
+                this.query.select('lastLoginError').subscribe(val => {
+                    this.update({
+                        message: val
+                    });
+                });
+            },
+            inputKeyup(e) {
+                e.preventDefault();
+                if (e.keyCode === 13) {
+                    this.doLogin();
+                }
+            },
+            loginClicked(e) {
+                e.preventDefault();
+                this.doLogin();
+            },
+            doLogin() {
+                // ref and two way binding is dead. this is good thing
+                let username = this.$('#username').value;
+                let password = this.$('#password').value;
+                if (username && password) {
+                    this.service.login(username, password);
+                    this.router.navigate('/dashboard');
+                } else {
+                    this.update({
+                        message: 'Enter Username and Password'
+                    });
+                }
+            }
+        }
+    </script>
+</login>

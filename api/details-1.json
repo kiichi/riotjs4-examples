@@ -1,0 +1,23 @@
+{
+    "status":"ok",
+    "result": [
+        {
+          "id": 1,
+          "isActive": false,
+          "balance": "$3,336.95",
+          "picture": "http://placehold.it/32x32",
+          "age": 40,
+          "name": "Ewing Oneil",
+          "gender": "male",
+          "email": "ewingoneil@momentia.com",
+          "phone": "+1 (901) 515-3489",
+          "address": "875 Loring Avenue, Blanford, New Mexico, 7867",
+          "tags": [
+            "student"
+          ],
+          "friends":[
+            {"id":0,"name":"Yesenia Sellers"}
+          ]
+        }
+      ]
+}

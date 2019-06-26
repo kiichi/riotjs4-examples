@@ -1,0 +1,69 @@
+<sidebar>
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#/dashboard">
+            <div class="sidebar-brand-icon">
+            <i class="fa fa-user"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3">Admin</div>
+        </a>
+        <div class="sidebar-heading">
+            Menu
+        </div>
+        <hr class="sidebar-divider my-0">
+       <li class="nav-item" onclick="{()=>menuClicked('dashboard')}">
+            <a class="nav-link">
+            <i class="fa fa-tachometer-alt"></i>
+            <span>Dashboard</span></a>
+        </li>
+        <li class="nav-item" onclick="{()=>menuClicked('list')}">
+            <a class="nav-link">
+            <i class="fa fa-database"></i>
+            <span>List</span></a>
+        </li>
+        <li class="nav-item" onclick="{()=>menuClicked('settings')}">
+            <a class="nav-link">
+            <i class="fa fa-cog"></i>
+            <span>Settings</span></a>
+        </li>
+        <hr class="sidebar-divider">
+        <li class="nav-item" onclick="{logoutClicked}">
+            <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span></a>
+        </li>
+        <hr class="sidebar-divider d-none d-md-block">
+        <div class="text-center d-none d-md-inline" onclick="{toggleClicked}">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+
+    </ul>
+    <script>
+        export default {
+            state : {
+                page: 'dashboard'
+            },
+            onBeforeMount(props, state) {
+                this.state.page = props.page;
+            },
+            onMounted(props, state) {
+            },
+            menuClicked(pageName){
+                this.router.navigate('/'+pageName);
+            },
+            logoutClicked(){
+                if (confirm('Are you sure to logout?')){
+                    this.router.navigate('/logout');
+                }
+            },
+            toggleClicked(){
+                $("body").toggleClass("sidebar-toggled");
+                $(".sidebar").toggleClass("toggled");
+            }
+        }
+    </script>
+    <style scoped>
+        .nav-item a {
+            cursor:pointer;
+        }
+    </style>
+</sidebar>

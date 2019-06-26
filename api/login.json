@@ -1,0 +1,8 @@
+{
+    "status":"ok",
+    "result": {
+        "username":"jdoe",
+        "name":"John Doe",
+        "token":"12345"
+    }
+}
