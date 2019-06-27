@@ -46,7 +46,7 @@ using mount api so that I can mount based on the route.
 I also playing around with Akita. I implemented a breadcrumb which you can push some item, and pop
 when you go back. Try to click "Friends" section of details page.
 
-![Sample](https://raw.githubusercontent.com/kiichi/riotjs4-examples/master/screenshot/sample.png)
+![sample.png (600×312)](https://raw.githubusercontent.com/kiichi/riotjs4-examples/master/screenshot/sample.png)
 
 
 ## Reference
