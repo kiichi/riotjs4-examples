@@ -14,8 +14,8 @@ I have to split tasks with other team members in different skill level.
 
 ## Stack 
 
-1. [Bootstrap 4](https://getbootstrap.com/docs/4.0/getting-started/introduction/) and [SB Admin 2](https://startbootstrap.com/themes/sb-admin-2/) CSS Template and Design
-2. [SB Admin 2](https://startbootstrap.com/themes/sb-admin-2/) - Componet based UI Library
+1. [Bootstrap 4](https://getbootstrap.com/docs/4.0/getting-started/introduction/) and [SB Admin 2](https://startbootstrap.com/themes/sb-admin-2/) - CSS Template and Design
+2. [Riot 4](https://riot.js.org/) - Componet based UI Library
 3. [Akita 4](https://netbasal.gitbook.io/akita/) - State Management [CDN](https://www.pika.dev/packages/@datorama/akita)
 4. [Axios 0.19.0](https://github.com/axios/axios) - HTTP
 5. [Navigo 6](https://github.com/krasimir/navigo) - Routing
@@ -35,7 +35,7 @@ live-server
 ## Implementation
 
 You can login using any credentials. All dummy data files are located under /api/ folder.
-I saved external libraries under /vendor/. I also playing around with Akita. I implemented a breadcrumb which you can push some item, and pop
+I saved external libraries under /vendor/. I was also playing around with Akita. I implemented a breadcrumb which you can push some item, and pop
 when you go back. Try to click "Friends" section of details page.
 
 ![sample.png (600×312)](https://raw.githubusercontent.com/kiichi/riotjs4-examples/master/screenshot/sample.png)
