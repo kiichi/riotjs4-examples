@@ -35,18 +35,21 @@ live-server
 ## Implementation
 
 You can login using any credentials. All dummy data files are located under /api/ folder.
-I saved external libraries under /vendor/. Although, it seems riot router and observable
-will be coming out, this is my challenge to use other state management library and
-router in clean way. One thing I couldn't figure out was, to create a nice directive like
-```
-<router route="dashboard"></router>
-```
-using mount api so that I can mount based on the route.
-
-I also playing around with Akita. I implemented a breadcrumb which you can push some item, and pop
+I saved external libraries under /vendor/. I also playing around with Akita. I implemented a breadcrumb which you can push some item, and pop
 when you go back. Try to click "Friends" section of details page.
 
 ![sample.png (600×312)](https://raw.githubusercontent.com/kiichi/riotjs4-examples/master/screenshot/sample.png)
+
+Things I didn't implement:
+
+Although it seems riot router and observable
+will be coming out, this is my challenge to use other state management library and
+router in clean way. One thing I couldn't figure out was, to create a nice directive 
+using mount api so that I can mount based on the route with component tag like this below:
+```
+<router route="dashboard"></router>
+```
+
 
 
 ## Reference
