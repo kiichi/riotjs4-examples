@@ -4,8 +4,8 @@ This is a sample project using Riot 4 which you need only browser to compile.
 I use all range of frameworks depend on my purpose. 
 
 For most of my internal company projects don't require heavy lifting frameworks that require
-Node to transpile like Vue, Angular, or React, but I also need to be avoid too basic like jQuery
-in order to avoid chaotic situation.
+Node to transpile like Vue, Angular, or React, but I cannot go too basic like jQuery
+in order to avoid chaotic situation in the future.
 
 The best part of Riot is that it compiles on the browser, and it supports all modern 
 component based UI mechanism with reasonable learning curve. This is very useful for me because
@@ -23,6 +23,8 @@ I have to split tasks with other team members in different skill levels.
 
 ## Running
 
+you can use any http server on your machine. Clone this repo then
+
 ```
 npm i -g live-server
 ```
@@ -31,6 +33,12 @@ Then
 
 ```
 live-server
+```
+
+or for python user
+
+```
+python3 -m http.server
 ```
 
 ## Implementation
@@ -47,13 +55,14 @@ Things I didn't implement:
 Although it seems riot router and observable
 will be coming out, this is my challenge to use other state management library and
 router in clean way. One thing I couldn't figure out was, to create a nice directive 
-using mount api so that I can mount based on the route with component tag like this below:
+using mount() api so that I can mount based on the route with component tag like this below:
+
 ```
 <router route="dashboard"></router>
 ```
 
-
-
 ## Reference
 
 - [MDN - Module Examples](https://github.com/mdn/js-examples/)
+- [damusix/riot-4-boilerplate: A complete starting point for Riot 4](https://github.com/damusix/riot-4-boilerplate)
+- [nesterow/frontless-redux: redux store for frontless](https://github.com/nesterow/frontless-redux)
