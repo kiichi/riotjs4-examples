@@ -2,7 +2,7 @@
 
 This is a sample project using Riot 4 which you need only browser to compile.
 I use all range of frameworks depend on my purpose. For most of my internal company projects 
-don't require heavy lifting frameworks that require Node to transpile; such as, Vue, Angular, or React.
+don't require heavy lifting frameworks with Node to transpile; such as, Vue, Angular, or React.
 Having said that, I cannot go back too basic, e.g. only jQuery, in order to avoid chaotic situation in the future.
 
 The best part of Riot is that it compiles on the browser, and it supports all modern 
