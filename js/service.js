@@ -6,7 +6,6 @@ class Service {
   }
 
   goto(page,params) {
-    //console.log(page,params);
     this.store.update({
       page: page,
       params: params

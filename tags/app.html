@@ -5,12 +5,7 @@
     <div id="content-wrapper" class="d-flex flex-column">
       <div id="content">
         <top-section></top-section>
-        <div class="container-fluid">
-          <page-dashboard if="{state.page === 'page-dashboard'}"></page-dashboard>
-          <page-list if="{state.page === 'page-list'}"></page-list>
-          <page-details if="{state.page === 'page-details'}"></page-list>
-          <page-settings if="{state.page === 'page-settings'}"></page-settings>
-        </div>
+        <div is="{state.page}" class="container-fluid"></div>
       </div>
       <bottom-section></bottom-section>
     </div>
