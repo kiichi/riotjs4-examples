@@ -28,8 +28,7 @@
         });
         
         this.query.select('page').subscribe(val => {
-          console.log('val is ',val);
-         // riot.unmount('page-details',true);
+          //console.log('val is ',val);
           this.update({ page: val });
         });
       }

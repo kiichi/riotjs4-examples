@@ -65,10 +65,6 @@ class Service {
   async getDetails(id) {
     const res = await this.http.get(this.config.baseUrl + 'details-'+id+'.json');
     if (res.data.status === 'ok') {
-      this.store.update({
-        details: res.data.result[0]
-      });
-      
       this.store.update(state =>({
         list: datoramaAkita.arrayUpdate(state.list, 
                                         item=>item.id === id, 
@@ -85,13 +81,14 @@ class Service {
     // pretend the server process PUT request
     const res = await this.http.get(this.config.baseUrl + 'details-'+id+'.json');
     if (res.data.status === 'ok') {
-      this.store.update( state => ({
-            details: {
-              ...state.details,
-              ...{isActive:isActive}
-            }
-        })
-      );
+      this.store.update(state =>({
+        list: datoramaAkita.arrayUpdate(state.list, 
+                                        item=>item.id === id, 
+                                        {
+                                        ...res.data.result[0],
+                                        ...{isActive:isActive}
+                                        })
+      }));
     }
     else {
       console.warn('error');

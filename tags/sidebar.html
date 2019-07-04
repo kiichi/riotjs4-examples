@@ -12,17 +12,17 @@
         <hr class="sidebar-divider my-0">
        <li class="nav-item" onclick="{()=>menuClicked('dashboard')}">
             <a class="nav-link">
-            <i class="fa fa-tachometer-alt"></i>
+            <i class="fa fa-tachometer-alt {state.page=='page-dashboard' ? 'text-white' : '' }"></i>
             <span>Dashboard</span></a>
         </li>
         <li class="nav-item" onclick="{()=>menuClicked('list')}">
             <a class="nav-link">
-            <i class="fa fa-database"></i>
+            <i class="fa fa-database {state.page=='page-list' ? 'text-white' : '' }"></i>
             <span>List</span></a>
         </li>
         <li class="nav-item" onclick="{()=>menuClicked('settings')}">
             <a class="nav-link">
-            <i class="fa fa-cog"></i>
+            <i class="fa fa-cog {state.page=='page-settings' ? 'text-white' : '' }"></i>
             <span>Settings</span></a>
         </li>
         <hr class="sidebar-divider">
@@ -46,6 +46,9 @@
                 this.state.page = props.page;
             },
             onMounted(props, state) {
+                this.query.select('page').subscribe((val)=>{
+                    this.update({page:val});
+                });
             },
             menuClicked(pageName){
                 this.router.navigate('/'+pageName);

@@ -16,8 +16,7 @@ const config = {
                                     isLoggedIn: false,
                                     lastLoginError: '',
                                     user: { 'uname': '', 'name': '', 'token': '' },
-                                    list:[],
-                                    details:{}
+                                    list:[]
                                   }, {
                                     name: 'repository'
                                   });

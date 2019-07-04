@@ -3,7 +3,6 @@
     "result": [
         {
           "id": 0,
-          "isActive": true,
           "balance": "$1,961.93",
           "picture": "http://placehold.it/32x32",
           "age": 33,
@@ -11,15 +10,10 @@
           "gender": "female",
           "email": "yeseniasellers@momentia.com",
           "phone": "+1 (847) 522-2078",
-          "address": "322 Leonora Court, Kanauga, Virgin Islands, 5488",
-          "tags": [
-            "elit",
-            "sunt"
-          ]
+          "address": "322 Leonora Court, Kanauga, Virgin Islands, 5488"
         },
         {
           "id": 1,
-          "isActive": false,
           "balance": "$3,336.95",
           "picture": "http://placehold.it/32x32",
           "age": 40,
@@ -31,7 +25,6 @@
         },
         {
           "id": 2,
-          "isActive": true,
           "balance": "$3,574.18",
           "picture": "http://placehold.it/32x32",
           "age": 22,
@@ -43,7 +36,6 @@
         },
         {
           "id": 3,
-          "isActive": false,
           "balance": "$3,568.38",
           "picture": "http://placehold.it/32x32",
           "age": 37,
@@ -55,7 +47,6 @@
         },
         {
           "id": 4,
-          "isActive": true,
           "balance": "$2,478.38",
           "picture": "http://placehold.it/32x32",
           "age": 20,
@@ -67,7 +58,6 @@
         },
         {
           "id": 5,
-          "isActive": true,
           "balance": "$3,888.01",
           "picture": "http://placehold.it/32x32",
           "age": 28,

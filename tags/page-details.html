@@ -3,7 +3,7 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-2">
         <breadcrumb></breadcrumb>
         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="{toggleActive}">
-            <i class="fas fa-star fa-sm {state.item.isActive ? 'text-white-50' : ''}"></i> Acitive</a>
+        <i class="fas fa-star fa-sm { (state.item.isActive === true) ? ' ' : 'text-white-50' }"></i> Acitive</a>
     </div>
 
     <!-- Content Row -->
@@ -44,28 +44,31 @@
                 
             },
             onMounted(props,state){
-                this.state.subList = this.query.select('list').subscribe(list=> {
+                const sub = this.query.select('list').subscribe(list=> {
                     console.log('list changed')
                     const params = this.store.store.getValue().params;
-                    if (list && params){
-                        const id = parseInt(params.id);
-                        const item = list.find(item=>item.id === id);
-                        //console.log(item);
-                        this.update({item:item});
-                    }
+                    const id = parseInt(params.id);
+                    const item = list.find(item=>item.id === id);
+                    //console.log(item);
+                    this.update({item:item});
                 });
-                this.state.subParam = this.query.select('params').pipe(item=>{
-                    console.log('in pipe',item,this,this.constructor);
-                    return item;
-                }).subscribe(params=>{
-                    if (params){
-                        this.service.getDetails(parseInt(params.id));
-                    }
+                // Note: somehow left side of this statement returns null if subscribe contains this.update inside.
+                // it works if it assigns it to a temp variable, then attach it to the state in separate line.
+                this.state.subList = sub;
+
+                this.state.subParam = this.query.select('params').subscribe(params=>{
+                    console.log('param changed')
+                    this.service.getDetails(parseInt(params.id));
                 });
             },
+            reflect(){
+                this.update();
+            },
             toggleActive(){
-                console.log(this.state);
-                this.service.updateActive(this.state.item.id, !this.state.item.isActive);
+                // Note: "isActive" property is omitted in .json files in order to simulate persistante
+                // otherwise, server value will wipe when you go back
+                console.log(!this.state.item.isActive);
+                this.service.updateActive(parseInt(this.state.item.id), !this.state.item.isActive);
             },
             onUnmounted(props,state){
                 if (this.state.subList) {
