@@ -23,7 +23,7 @@
                                 <th scope="col">Name</th>
                                 <th scope="col">Phone</th>
                                 <th scope="col">Balance</th>
-                                <th scope="col">Active</th>
+                                <th scope="col" class="text-center">Favorite</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -32,7 +32,7 @@
                                 <td>{item.name}</td>
                                 <td>{item.phone}</td>
                                 <td>{item.balance}</td>
-                                <td><i class="fas fa-star fa-sm { (item.isActive === true) ? ' ' : 'text-white-50' }"></i></a></td>
+                                <td class="text-center"><i class="fas fa-star { (item.favorite === true) ? ' ' : 'text-white-50' }"></i></a></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -43,16 +43,29 @@
     <script>
         export default {
             state:{
-                list:[]
+                list:[],
+                subscription: null
             },
             async onMounted(props,state){
-                await this.service.getList();
-                this.query.select('list').subscribe(list => this.update({list:list}));
+                // Note: avoiding loading fresh list so we can keep .favorite attribute
+                // you can also force reload whenever it's mounted
+                if (this.query.getValue().list.length === 0){
+                    await this.service.getList();
+                }
+                const sub = this.query.select('list').subscribe(list => {
+                    this.update({list:list})
+                });
+                this.state.subscription = sub;
                 this.service.clearBreadcrumb();
             },
             itemClicked(item){
                 this.service.pushBreadcrumb(item.name,item.id);
                 this.router.navigate('/list/' + item.id);
+            },
+            onUnmounted(props,state){
+                if (this.state.subscription){
+                    this.state.subscription.unsubscribe();
+                }
             }
         }
     </script>

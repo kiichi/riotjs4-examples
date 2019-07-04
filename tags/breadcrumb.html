@@ -11,13 +11,18 @@
     <script>
         export default {
             state:{
-                breadcrumb:[]
+                breadcrumb:[],
+                subscription:null
             },
             onMounted(props,state){
-                this.query.select('breadcrumb').subscribe(data => this.update({breadcrumb:data}));
+                const sub = this.query.select('breadcrumb').subscribe(data => this.update({breadcrumb:data}));
+                this.state.subscription = sub;
             },
             goBack(popCount){
                 this.service.popBreadcrumb(popCount);
+            },
+            onUnmounted(props,state){
+                this.state.subscription.unsubscribe();
             }
         }
     </script>

@@ -25,7 +25,7 @@ class Service {
         user: {
           name: res.data.result.name,
           token: res.data.result.token,
-          uname: res.data.result.uname
+          username: res.data.result.username
         }
       });
     }
@@ -77,7 +77,7 @@ class Service {
     }
   }
 
-  async updateActive(id, isActive){
+  async updateFavorite(id, favorite){
     // pretend the server process PUT request
     const res = await this.http.get(this.config.baseUrl + 'details-'+id+'.json');
     if (res.data.status === 'ok') {
@@ -86,7 +86,7 @@ class Service {
                                         item=>item.id === id, 
                                         {
                                         ...res.data.result[0],
-                                        ...{isActive:isActive}
+                                        ...{favorite:favorite}
                                         })
       }));
     }

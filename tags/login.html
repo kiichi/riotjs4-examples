@@ -47,14 +47,19 @@
     <script>
         export default {
             state: {
-                message: ''
+                message: '',
+                subscription: null
             },
             onMounted(props, state) {
-                this.query.select('lastLoginError').subscribe(val => {
+                const sub = this.query.select('lastLoginError').subscribe(val => {
                     this.update({
                         message: val
                     });
                 });
+                this.state.subscription = sub;
+            },
+            onUnmounted(props,state){
+                this.state.subscription.unsubscribe();
             },
             inputKeyup(e) {
                 e.preventDefault();

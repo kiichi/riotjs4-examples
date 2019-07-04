@@ -20,18 +20,27 @@
     export default {
       state: {
         isLoggedIn: false,
-        page: 'page-dashboard'
+        page: 'page-dashboard',
+        subLogin: null,
+        subPage: null
       },
       onMounted(props, state) {
-        this.query.select('isLoggedIn').subscribe(val => {
+        const subLogin = this.query.select('isLoggedIn').subscribe(val => {
           this.update({ isLoggedIn: val });
         });
+        this.state.subLogin = subLogin;
         
-        this.query.select('page').subscribe(val => {
+        const subPage = this.query.select('page').subscribe(val => {
           //console.log('val is ',val);
           this.update({ page: val });
         });
+        this.state.subPage = subPage;
+      },
+      onUnmounted(props,state){
+        this.state.subLogin.unsubscribe();
+        this.state.subPage.unsubscribe();
       }
+
     }
   </script>
   <style>

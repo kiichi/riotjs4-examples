@@ -40,15 +40,20 @@
     <script>
         export default {
             state : {
-                page: 'dashboard'
+                page: 'dashboard',
+                subscription: null
             },
             onBeforeMount(props, state) {
                 this.state.page = props.page;
             },
             onMounted(props, state) {
-                this.query.select('page').subscribe((val)=>{
+                const sub = this.query.select('page').subscribe((val)=>{
                     this.update({page:val});
                 });
+                this.state.subscription = sub;
+            },
+            onUnmounted(props,state){
+                this.state.subscription.unsubscribe();
             },
             menuClicked(pageName){
                 this.router.navigate('/'+pageName);
