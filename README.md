@@ -19,6 +19,8 @@ I have to split tasks with other team members in different skill levels.
 4. [Axios 0.19.0](https://github.com/axios/axios) - HTTP
 5. [Navigo 6](https://github.com/krasimir/navigo) - Routing
 
+I carefully selected other components to fit Riot's theme ... minimalistic but mature enough. They are not random gathering from github.
+
 ## Running
 
 you can use any http server on your machine. Clone this repo then
@@ -48,7 +50,8 @@ I saved external libraries under /vendor/. This is because I hate some minor upd
 break the current setup; however, most of case, you don't have to save those files, just directly
 link to from the CDN (even simpler).
 
-I was also playing around with Akita. I implemented a breadcrumb which you can push some item, and pop
+I was also playing around with Akita since I was watching this from last year as replacement of rxjs. 
+Using Akita, I implemented a breadcrumb which you can push some items, and pop
 when you go back. Try to click "Friends" section of details page.
 
 ![sample.png (600×312)](https://raw.githubusercontent.com/kiichi/riotjs4-examples/master/screenshot/sample.png)

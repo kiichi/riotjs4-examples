@@ -28,7 +28,8 @@ class Service {
           uname: res.data.result.uname
         }
       });
-    } else {
+    }
+    else {
       this.store.update({
         lastLoginError: res.data.Message
       });
@@ -55,7 +56,8 @@ class Service {
       this.store.update({
         list: res.data.result
       });
-    } else {
+    }
+    else {
       console.warn('error');
     }
   }
@@ -66,7 +68,32 @@ class Service {
       this.store.update({
         details: res.data.result[0]
       });
-    } else {
+      
+      this.store.update(state =>({
+        list: datoramaAkita.arrayUpdate(state.list, 
+                                        item=>item.id === id, 
+                                        res.data.result[0])
+      }));
+      //console.log(this.store.store.getValue().list);
+    }
+    else {
+      console.warn('error');
+    }
+  }
+
+  async updateActive(id, isActive){
+    // pretend the server process PUT request
+    const res = await this.http.get(this.config.baseUrl + 'details-'+id+'.json');
+    if (res.data.status === 'ok') {
+      this.store.update( state => ({
+            details: {
+              ...state.details,
+              ...{isActive:isActive}
+            }
+        })
+      );
+    }
+    else {
       console.warn('error');
     }
   }

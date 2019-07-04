@@ -26,7 +26,10 @@
         this.query.select('isLoggedIn').subscribe(val => {
           this.update({ isLoggedIn: val });
         });
+        
         this.query.select('page').subscribe(val => {
+          console.log('val is ',val);
+         // riot.unmount('page-details',true);
           this.update({ page: val });
         });
       }

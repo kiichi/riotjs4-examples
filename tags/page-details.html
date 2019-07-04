@@ -2,7 +2,7 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-2">
         <breadcrumb></breadcrumb>
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="{()=>alert('not implemented yet')}">
+        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="{toggleActive}">
             <i class="fas fa-star fa-sm {state.item.isActive ? 'text-white-50' : ''}"></i> Acitive</a>
     </div>
 
@@ -38,20 +38,47 @@
     <script>
         export default {
             state: {
-                item:{}
+                item:{},
+                subParam:null,
+                subList:null
+                
             },
             onMounted(props,state){
-                this.query.select('details').subscribe(details=> {
-                    if (details){
-                        this.update({item:details});
+                this.state.subList = this.query.select('list').subscribe(list=> {
+                    console.log('list changed')
+                    const params = this.store.store.getValue().params;
+                    if (list && params){
+                        const id = parseInt(params.id);
+                        const item = list.find(item=>item.id === id);
+                        //console.log(item);
+                        this.update({item:item});
                     }
                 });
-                this.query.select('params').subscribe(params=>{
+                this.state.subParam = this.query.select('params').pipe(item=>{
+                    console.log('in pipe',item,this,this.constructor);
+                    return item;
+                }).subscribe(params=>{
                     if (params){
-                        this.service.getDetails(params.id);
+                        this.service.getDetails(parseInt(params.id));
                     }
                 });
+            },
+            toggleActive(){
+                console.log(this.state);
+                this.service.updateActive(this.state.item.id, !this.state.item.isActive);
+            },
+            onUnmounted(props,state){
+                if (this.state.subList) {
+                    console.log('cleaning up....list');
+                    this.state.subList.unsubscribe();
+                }
+                if (this.state.subParam) {
+                    console.log('cleaning up....param');
+                    this.state.subParam.unsubscribe();
+                }
+
             }
+
         }
     </script>
     <style>
