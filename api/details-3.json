@@ -3,7 +3,6 @@
     "result": [
         {
           "id": 3,
-          "isActive": false,
           "balance": "$3,568.38",
           "picture": "http://placehold.it/32x32",
           "age": 37,

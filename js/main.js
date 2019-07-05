@@ -6,27 +6,22 @@ const config = {
   baseUrl: '/api/'
 };
 
-// Alias
-const http = axios;
-const akita = datoramaAkita;
-
 // Main
 (async function main() {
   await riot.compile()
 
-  const store = akita.createStore({ page: 'dashboard',
+  const store = datoramaAkita.createStore({ page: 'dashboard',
                                     params:{},
                                     breadcrumb:[],
                                     isLoggedIn: false,
                                     lastLoginError: '',
                                     user: { 'uname': '', 'name': '', 'token': '' },
-                                    list:[],
-                                    details:{}
+                                    list:[]
                                   }, {
                                     name: 'repository'
                                   });
-  const query = akita.createQuery(store);
-  const service = new Service(store, http, config);
+  const query = datoramaAkita.createQuery(store);
+  const service = new Service(store, axios, config);
   const router = new Router(service);
 
   riot.install((component) => {
