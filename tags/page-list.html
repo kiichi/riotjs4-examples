@@ -63,9 +63,7 @@
                 this.router.navigate('/list/' + item.id);
             },
             onUnmounted(props,state){
-                if (this.state.subscription){
-                    this.state.subscription.unsubscribe();
-                }
+                this.state.subscription.unsubscribe();
             }
         }
     </script>

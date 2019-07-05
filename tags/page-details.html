@@ -44,9 +44,8 @@
             },
             onMounted(props,state){
                 const subList = this.query.select('list').subscribe(list=> {
-                    console.log('list changed')
-                    const params = this.store.store.getValue().params;
-                    const id = parseInt(params.id);
+                    //console.log('list changed',list);
+                    const id = parseInt(this.query.getValue().params.id);
                     const item = list.find(item=>item.id === id);
                     this.update({item:item});
                 });

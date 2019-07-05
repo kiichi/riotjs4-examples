@@ -44,9 +44,8 @@ class Service {
       user: {
         name: '',
         token: '',
-        uname: ''
-      },
-      data: {}
+        username: ''
+      }
     });
   }
 
@@ -66,9 +65,7 @@ class Service {
     const res = await this.http.get(this.config.baseUrl + 'details-'+id+'.json');
     if (res.data.status === 'ok') {
       this.store.update(state =>({
-        list: datoramaAkita.arrayUpdate(state.list, 
-                                        item=>item.id === id, 
-                                        res.data.result[0])
+        list: datoramaAkita.arrayUpdate(state.list, item=>item.id === id, res.data.result[0])
       }));
       //console.log(this.store.store.getValue().list);
     }
