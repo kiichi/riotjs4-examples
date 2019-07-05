@@ -49,8 +49,6 @@
                     const item = list.find(item=>item.id === id);
                     this.update({item:item});
                 });
-                // Note: somehow left side of this statement returns null if subscribe contains this.update inside.
-                // it works if it assigns it to a temp variable, then attach it to the state in separate line.
                 this.state.subList = subList;
 
                 const subParam = this.query.select('params').subscribe(params=>{

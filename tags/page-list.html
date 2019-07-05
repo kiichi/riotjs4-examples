@@ -47,7 +47,7 @@
                 subscription: null
             },
             async onMounted(props,state){
-                // Note: avoiding loading fresh list so we can keep .favorite attribute
+                // Note: avoid loading fresh list so we can keep .favorite attribute
                 // you can also force reload whenever it's mounted
                 if (this.query.getValue().list.length === 0){
                     await this.service.getList();

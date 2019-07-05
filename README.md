@@ -56,6 +56,19 @@ when you go back. Try to click "Friends" section of details page.
 
 ![sample.png (600×312)](https://raw.githubusercontent.com/kiichi/riotjs4-examples/master/screenshot/sample.png)
 
+## Known issue
+
+Note: somehow left side of this statement below returns null if subscribe contains this.update inside.
+it works if it assigns it to a temp variable, then attach it to the state in separate line.
+See onMounted event in each component
+
+```javascript
+const sub = this.query.select('list').subscribe(list => {
+    this.update({list:list})
+});
+this.state.subscription = sub;
+```
+
 
 ## Reference
 
