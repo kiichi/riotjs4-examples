@@ -1,0 +1,142 @@
+<compile-me>
+    <div class="btn-group compile-button dropup">
+        <button type="button" class="btn  btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-cog {state.processing ? 'fa-spin' : ''}"></i>
+            {props.title ? props.title : 'Compile Me !'}
+        </button>
+        <div class="dropdown-menu dropdown-menu-right">
+            <span class="ml-4 text-muted">Version: {state.version}</span>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#" onclick="{downloadJS}">Download compiled .js file - Deploy this under {state.scriptPath}</a>
+            <a class="dropdown-item" href="#" onclick="{downloadIndex}">Download index.html - Production index page without riot tag</a>
+        </div>
+    </div>
+    <style>
+        .compile-button {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            margin-left: 20px;
+        }
+    </style>
+    <script>
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Usage Example:
+        //
+        //  <compile-me title="Developer Tool" entry-tag="start.riot" dist-path="dist/start.js"></compile-me> 
+        //
+        // [Props] (Beta)
+        //   title= ... - You can specify the title of this button (Default "Compile Me!")
+        //   entry-tag=... - pass the entry tag name. (Default "app.html")
+        //   dist-path=... - specify target file path (Default "js/app.js")
+        //   version=... - specify version number if you need to embed something in comment line. (Default generated time epoch)
+        // 
+        // Note: 
+        //      in main script when you debug the app, detect if the html is production or not,
+        //      by checking if any riot type tags in the index.html
+        //      so that you can avoid calling .compile in the produciton mode
+        //
+        //   const riotScripts = document.querySelectorAll('script[type=riot]');
+        //   if (riotScripts.length > 0){
+        //     await riot.compile()
+        //     riot.mount('compile-me');
+        //   }
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        export default {
+            state:{
+                processing:false,
+                version: '',
+                tagName:'',
+                scriptPath:''
+            },
+            onBeforeMount(props,state){
+                this.state.version = (new Date()).getTime();
+                if (this.props.version) {
+                    this.state.version = this.props.version;
+                }
+                this.state.tagName = 'app.html';
+                this.state.scriptPath = 'js/app.js';
+                if (this.props.entryTag){
+                    this.state.tagName = this.props.entryTag;
+                }
+                if (this.props.distPath){
+                    this.state.scriptPath = this.props.distPath;
+                }
+            },
+            download(filename, text) {
+                var element = document.createElement('a');
+                element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+                element.setAttribute('download', filename);
+                element.style.display = 'none';
+                document.body.appendChild(element);
+                element.click();
+                document.body.removeChild(element);
+            },
+            async downloadJS() {
+                this.update({processing:true});
+                var codeArr = [];
+                var promiseArr = [];
+                // Get list of all riot tags
+                document.querySelectorAll('script[type=riot]').forEach(elem => {
+                    if (elem.src.indexOf('compile-me.html') === -1) {
+                        promiseArr.push(riot.compileFromUrl(elem.src));
+                    }
+                });
+
+                // process all then concat them
+                await Promise.all(promiseArr).then(resArr => {
+                    resArr.forEach(res => {
+                        const name = res.meta.tagName;
+                        // inject "export default" and riot.register statement
+                        // NOTE: I saw the original code does this string replacement. not sure the best way
+                        const code2 = res.code.substr(0, res.code.length - 1).replace('export default ', '');
+                        codeArr.push("riot.register('" + name + "'," + code2 + ");");
+                    });
+                    
+                    var prefix = '// Version: ' + this.state.version + '\n// Auto-generated code. Do not touch.\n';
+                    var allStr = prefix + codeArr.join('\n\n');
+                    //console.log(allStr);
+                    this.download('app.js',allStr);
+                    this.update({processing:false});
+                });
+            },
+            async downloadIndex(){
+                this.update({processing:true});
+                const res = await fetch('index.html');
+                const html = await res.text();
+                var parser = new DOMParser();
+                var htmlDoc = parser.parseFromString(html, 'text/html');
+                // remove all riot tags
+                htmlDoc.querySelectorAll('script[type=riot]').forEach(elem => {
+                    //console.log(elem.src);
+                    // Instead of app.html tag, insert app.js 
+                    if (elem.src.indexOf(this.state.tagName) != -1){
+                        var mainScript = document.createElement("script");
+                        mainScript.src = this.state.scriptPath;
+                        elem.parentNode.insertBefore(mainScript,elem);
+                    }
+                    elem.remove();
+                });
+                // Suisidal cleaning
+                htmlDoc.querySelectorAll('compile-me').forEach(elem => {
+                    elem.remove();
+                });
+                // remove live-server injected tag if any
+                htmlDoc.querySelectorAll('script[type="text/javascript"]').forEach(elem => {
+                    elem.remove();
+                    if (elem.innerHTML.indexOf('WebSocket') != -1 && elem.innerHTML.indexOf('Live reload enabled')){
+                        elem.remove();
+                    }
+                });
+                // comment and blank line clean up
+                const prefix = '<!DOCTYPE html>\n<html>\n<!-- Version: '+this.state.version+'-->\n';
+                const postfix = '\n</html>';
+                const finalHtml = prefix + htmlDoc.documentElement.innerHTML.replace('<!-- Code injected by live-server -->','').replace(/(^[ \t]*\n)/gm, '') + postfix;
+                //console.log(finalHtml);
+                this.download('index.html',finalHtml);
+                this.update({processing:false});
+            }
+        }
+    </script>
+</compile-me>

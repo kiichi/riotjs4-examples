@@ -10,9 +10,21 @@ const config = {
 const http = axios;
 const akita = datoramaAkita;
 
+function hasRiotTags(){
+   // Call compile if tag is used in script tag
+   const riotScripts = document.querySelectorAll('script[type=riot]');
+   if (riotScripts.length > 0){
+     return true;
+   }
+   return false;
+}
+
 // Main
 (async function main() {
-  await riot.compile()
+  if (hasRiotTags()){
+    await riot.compile()
+    riot.mount('compile-me');
+  }
 
   const store = akita.createStore({ page: 'dashboard',
                                     params:{},

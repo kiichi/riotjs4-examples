@@ -53,6 +53,44 @@ when you go back. Try to click "Friends" section of details page.
 
 ![sample.png (600×312)](https://raw.githubusercontent.com/kiichi/riotjs4-examples/master/screenshot/sample.png)
 
+Those files are pre-compiled production files, please ignore them:
+
+- js/app.js
+- index-prod.html
+
+For more details, please see the next section.
+
+## Self Compiler Button (Compile Me!)
+
+You might be wondering "Compile Me!" button at the bottom right corner. This is a conventional button 
+to export single script file which contains pre-compileed riot tags, and clean up index.html script tag in your browser without need of command line tools.
+
+For production deployment, I copy all assets without tags, and I deploy only index.html and app.js. 
+Most of case, I simply deploy app.js unless I change css or images.
+
+You can see the production version in js/app.js and index-prod.html. 
+
+Total duration load is 220ms (18 requests), and this is good improvement compare to development version, 550ms (29 requests).
+Please note that this feature is still experimental. Remove ```<compile-me>``` tag if you don't need.
+
+![compile-me.png (300x156)](https://raw.githubusercontent.com/kiichi/riotjs4-examples/master/screenshot/compile-me.png)
+
+```
+<compile-me></compile-me>
+```
+
+or you can specify parameters
+
+```
+<compile-me title="Developer Tools" entry-tag="tags/app.html" dist-path="js/app.js" version="1.0.0"></compile-me>
+```
+
+Attributes:
+
+- title= ... - You can specify the title of this button (Default "Compile Me!")
+- entry-tag=... - pass the entry tag name. (Default "app.html")
+- dist-path=... - specify target file path (Default "js/app.js")
+- version=... - specify version number if you need to embed something in comment line. (Default generated time epoch)
 
 ## Reference
 
