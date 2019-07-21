@@ -76,7 +76,7 @@ You can see the production version in js/app.js and index-prod.html.
 Total duration load is 220ms (18 requests), and this is good improvement compare to development version, 550ms (29 requests).
 Please note that this feature is still experimental. Remove ```<compile-me>``` tag if you don't need.
 
-![compile-me.png (300x156)](https://raw.githubusercontent.com/kiichi/riotjs4-examples/master/screenshot/compile-me.png)
+![compile-me.png](https://raw.githubusercontent.com/kiichi/riotjs4-examples/master/screenshot/compile-me.png)
 
 ```
 <compile-me></compile-me>
