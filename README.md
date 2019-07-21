@@ -19,6 +19,8 @@ I have to split tasks with other team members in different skill levels.
 4. [Axios 0.19.0](https://github.com/axios/axios) - HTTP
 5. [Navigo 6](https://github.com/krasimir/navigo) - Routing
 
+I carefully selected other components to fit Riot's theme ... minimalistic but mature enough. They are not random gathering from github.
+
 ## Running
 
 you can use any http server on your machine. Clone this repo then
@@ -48,7 +50,8 @@ I saved external libraries under /vendor/. This is because I hate some minor upd
 break the current setup; however, most of case, you don't have to save those files, just directly
 link to from the CDN (even simpler).
 
-I was also playing around with Akita. I implemented a breadcrumb which you can push some item, and pop
+I was also playing around with Akita since I was watching this from last year as replacement of rxjs. 
+Using Akita, I implemented a breadcrumb which you can push some items, and pop
 when you go back. Try to click "Friends" section of details page.
 
 ![sample.png (600×312)](https://raw.githubusercontent.com/kiichi/riotjs4-examples/master/screenshot/sample.png)
@@ -92,8 +95,34 @@ Attributes:
 - dist-path=... - specify target file path (Default "js/app.js")
 - version=... - specify version number if you need to embed something in comment line. (Default generated time epoch)
 
+## Known issue
+
+Note: somehow left side of this statement below returns null if subscribe contains this.update inside.
+it works if it assigns it to a temp variable, then attach it to the state in separate line.
+See onMounted event in each component
+
+```javascript
+const sub = this.query.select('list').subscribe(list => {
+    this.update({list:list})
+});
+this.state.subscription = sub;
+```
+
+
 ## Reference
 
+### General References
+
 - [MDN - Module Examples](https://github.com/mdn/js-examples/)
+- [ES Modules, the JavaScript Module System](https://flaviocopes.com/es-modules/)
+
+
+### Other Riot4 projects
+
 - [damusix/riot-4-boilerplate: A complete starting point for Riot 4](https://github.com/damusix/riot-4-boilerplate)
 - [nesterow/frontless-redux: redux store for frontless](https://github.com/nesterow/frontless-redux)
+
+### Other interesting stuff
+
+- [A Future Without Webpack - Pika](https://www.pika.dev/blog/pika-web-a-future-without-webpack/)
+- [You Should be Using esm - DEV Community 👩‍💻👨‍💻](https://dev.to/bennypowers/you-should-be-using-esm-kn3)

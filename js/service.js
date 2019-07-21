@@ -25,10 +25,11 @@ class Service {
         user: {
           name: res.data.result.name,
           token: res.data.result.token,
-          uname: res.data.result.uname
+          username: res.data.result.username
         }
       });
-    } else {
+    }
+    else {
       this.store.update({
         lastLoginError: res.data.Message
       });
@@ -43,9 +44,8 @@ class Service {
       user: {
         name: '',
         token: '',
-        uname: ''
-      },
-      data: {}
+        username: ''
+      }
     });
   }
 
@@ -55,7 +55,8 @@ class Service {
       this.store.update({
         list: res.data.result
       });
-    } else {
+    }
+    else {
       console.warn('error');
     }
   }
@@ -63,10 +64,30 @@ class Service {
   async getDetails(id) {
     const res = await this.http.get(this.config.baseUrl + 'details-'+id+'.json');
     if (res.data.status === 'ok') {
-      this.store.update({
-        details: res.data.result[0]
-      });
-    } else {
+      this.store.update(state =>({
+        list: datoramaAkita.arrayUpdate(state.list, item=>item.id === id, res.data.result[0])
+      }));
+      //console.log(this.store.store.getValue().list);
+    }
+    else {
+      console.warn('error');
+    }
+  }
+
+  async updateFavorite(id, favorite){
+    // pretend the server process PUT request
+    const res = await this.http.get(this.config.baseUrl + 'details-'+id+'.json');
+    if (res.data.status === 'ok') {
+      this.store.update(state =>({
+        list: datoramaAkita.arrayUpdate(state.list, 
+                                        item=>item.id === id, 
+                                        {
+                                        ...res.data.result[0],
+                                        ...{favorite:favorite}
+                                        })
+      }));
+    }
+    else {
       console.warn('error');
     }
   }

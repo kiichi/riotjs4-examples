@@ -2,8 +2,8 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-2">
         <breadcrumb></breadcrumb>
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="{()=>alert('not implemented yet')}">
-            <i class="fas fa-star fa-sm {state.item.isActive ? 'text-white-50' : ''}"></i> Acitive</a>
+        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="{toggleFavorite}">
+        <i class="fas fa-star fa-sm { (state.item.favorite === true) ? ' ' : 'text-white-50' }"></i> Favorite</a>
     </div>
 
     <!-- Content Row -->
@@ -38,19 +38,35 @@
     <script>
         export default {
             state: {
-                item:{}
+                item:{},
+                subParam:null,
+                subList:null
             },
             onMounted(props,state){
-                this.query.select('details').subscribe(details=> {
-                    if (details){
-                        this.update({item:details});
-                    }
+                const subList = this.query.select('list').subscribe(list=> {
+                    //console.log('list changed',list);
+                    const id = parseInt(this.query.getValue().params.id);
+                    const item = list.find(item=>item.id === id);
+                    this.update({item:item});
                 });
-                this.query.select('params').subscribe(params=>{
-                    if (params){
-                        this.service.getDetails(params.id);
-                    }
+                this.state.subList = subList;
+
+                const subParam = this.query.select('params').subscribe(params=>{
+                    this.service.getDetails(parseInt(params.id));
                 });
+                this.state.subParam = subParam;
+            },
+            reflect(){
+                this.update();
+            },
+            toggleFavorite(){
+                // Note: ".favorite" property is omitted in .json files in order to simulate persistante
+                // otherwise, server value will wipe when you go back
+                this.service.updateFavorite(parseInt(this.state.item.id), !this.state.item.favorite);
+            },
+            onUnmounted(props,state){
+                this.state.subList.unsubscribe();
+                this.state.subParam.unsubscribe();
             }
         }
     </script>

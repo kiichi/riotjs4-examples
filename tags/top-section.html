@@ -14,7 +14,7 @@
         <input type="text" class="form-control bg-light border-0 small" placeholder="Search" aria-label="Search"
           aria-describedby="basic-addon2">
         <div class="input-group-append">
-          <button class="btn btn-primary" type="button">
+          <button class="btn btn-primary" type="button" onclick="{searchClicked}">
             <i class="fas fa-search fa-sm"></i>
           </button>
         </div>
@@ -67,9 +67,7 @@
           </a>
         </div>
       </li>
-
     </ul>
-
   </nav>
   <!-- End of Topbar -->
 
@@ -77,23 +75,31 @@
     export default {
       state: {
         count: 0,
-        user: {}
+        user: {},
+        subscription:null
       },
       onMounted(props, state) {
-        this.query.select('user').subscribe(user => {
+        const sub = this.query.select('user').subscribe(user => {
           this.update({
             user: user
           });
         });
+        this.state.subscription = sub;
+      },
+      onUnmounted(props,state){
+        this.state.subscription.unsubscribe();
       },
       profileClicked() {
-        alert(this.state.user.name + ' (' + this.state.user.uname + ')');
+        alert(this.state.user.name + ' (' + this.state.user.username + ')');
+      },
+      searchClicked(){
+        alert('search clicked');
       },
       logoutClicked() {
         if (confirm('Are you sure to logout?')) {
           this.router.navigate('/logout');
         }
-      },
+      }
     }
   </script>
 </top-section>
