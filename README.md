@@ -50,7 +50,7 @@ I saved external libraries under /vendor/. This is because I hate some minor upd
 break the current setup; however, most of case, you don't have to save those files, just directly
 link to from the CDN (even simpler).
 
-I was also playing around with Akita since I was watching this from last year as replacement of rxjs. 
+I was also playing around with Akita since I was watching this from last year as replacement of redux. 
 Using Akita, I implemented a breadcrumb which you can push some items, and pop
 when you go back. Try to click "Friends" section of details page.
 
