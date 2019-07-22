@@ -79,11 +79,11 @@
                 var promiseArr = [];
                 // Get list of all riot tags
                 document.querySelectorAll('script[type=riot]').forEach(elem => {
-                    if (elem.src.indexOf('compile-me.html') === -1) {
-                        promiseArr.push(riot.compileFromUrl(elem.src));
+                    const src = elem.src || elem.dataset.src;
+                    if (src.indexOf('compile-me.html') === -1) {
+                        promiseArr.push(riot.compileFromUrl(src));
                     }
                 });
-
                 // process all then concat them
                 await Promise.all(promiseArr).then(resArr => {
                     resArr.forEach(res => {
@@ -109,9 +109,9 @@
                 var htmlDoc = parser.parseFromString(html, 'text/html');
                 // remove all riot tags
                 htmlDoc.querySelectorAll('script[type=riot]').forEach(elem => {
-                    //console.log(elem.src);
+                    const src = elem.src || elem.dataset.src;
                     // Instead of app.html tag, insert app.js 
-                    if (elem.src.indexOf(this.state.tagName) != -1){
+                    if (src.indexOf(this.state.tagName) != -1){
                         var mainScript = document.createElement("script");
                         mainScript.src = this.state.scriptPath;
                         elem.parentNode.insertBefore(mainScript,elem);
