@@ -116,6 +116,9 @@ this.state.subscription = sub;
 - [MDN - Module Examples](https://github.com/mdn/js-examples/)
 - [ES Modules, the JavaScript Module System](https://flaviocopes.com/es-modules/)
 
+### My Riot4 Examples
+
+- [Parent / Child](https://next.plnkr.co/edit/REbhuA3qDA0WZuju?preview) - Using "is" syntac, created a simple nested tags. It's Base component and dynamically switching inner components.
 
 ### Other Riot4 projects
 

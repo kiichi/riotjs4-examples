@@ -1,4 +1,4 @@
-//Version: 1563721864266
+// Version: 1563817390157
 // Auto-generated code. Do not touch.
 riot.register('app',{
   'css': `app table,[is="app"] table{ table-layout: fixed; width: 100%; } app .fa-2x,[is="app"] .fa-2x{ font-size: 1em; margin-left: 5px; } app .clickable,[is="app"] .clickable{ cursor: pointer; } app sidebar,[is="app"] sidebar{ background-color: #224abe; } app login,[is="app"] login{ width: 100%; }`,
@@ -6,22 +6,33 @@ riot.register('app',{
   'exports': {
     state: {
       isLoggedIn: false,
-      page: 'page-dashboard'
+      page: 'page-dashboard',
+      subLogin: null,
+      subPage: null
     },
 
     onMounted(props, state) {
-      this.query.select('isLoggedIn').subscribe(val => {
+      const subLogin = this.query.select('isLoggedIn').subscribe(val => {
         this.update({ isLoggedIn: val });
       });
-      this.query.select('page').subscribe(val => {
+      this.state.subLogin = subLogin;
+      
+      const subPage = this.query.select('page').subscribe(val => {
+        //console.log('val is ',val);
         this.update({ page: val });
       });
+      this.state.subPage = subPage;
+    },
+
+    onUnmounted(props,state){
+      this.state.subLogin.unsubscribe();
+      this.state.subPage.unsubscribe();
     }
   },
 
   'template': function(template, expressionTypes, bindingTypes, getComponent) {
     return template(
-      '<login expr44></login><div expr45 id="wrapper"></div><a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>',
+      '<login expr49></login><div expr50 id="wrapper"></div><a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>',
       [{
         'type': bindingTypes.IF,
 
@@ -29,8 +40,8 @@ riot.register('app',{
           return !scope.state.isLoggedIn;
         },
 
-        'redundantAttribute': 'expr44',
-        'selector': '[expr44]',
+        'redundantAttribute': 'expr49',
+        'selector': '[expr49]',
 
         'template': template(null, [{
           'type': bindingTypes.TAG,
@@ -50,11 +61,11 @@ riot.register('app',{
           return scope.state.isLoggedIn;
         },
 
-        'redundantAttribute': 'expr45',
-        'selector': '[expr45]',
+        'redundantAttribute': 'expr50',
+        'selector': '[expr50]',
 
         'template': template(
-          '<sidebar expr46></sidebar><div id="content-wrapper" class="d-flex flex-column"><div id="content"><top-section expr47></top-section><div expr48 class="container-fluid"></div></div><bottom-section expr49></bottom-section></div>',
+          '<sidebar expr51></sidebar><div id="content-wrapper" class="d-flex flex-column"><div id="content"><top-section expr52></top-section><div expr53 class="container-fluid"></div></div><bottom-section expr54></bottom-section></div>',
           [{
             'type': bindingTypes.TAG,
             'getComponent': getComponent,
@@ -81,8 +92,8 @@ riot.register('app',{
               }
             }],
 
-            'redundantAttribute': 'expr46',
-            'selector': '[expr46]'
+            'redundantAttribute': 'expr51',
+            'selector': '[expr51]'
           }, {
             'type': bindingTypes.TAG,
             'getComponent': getComponent,
@@ -93,8 +104,8 @@ riot.register('app',{
 
             'slots': [],
             'attributes': [],
-            'redundantAttribute': 'expr47',
-            'selector': '[expr47]'
+            'redundantAttribute': 'expr52',
+            'selector': '[expr52]'
           }, {
             'type': bindingTypes.TAG,
             'getComponent': getComponent,
@@ -114,8 +125,8 @@ riot.register('app',{
               }
             }],
 
-            'redundantAttribute': 'expr48',
-            'selector': '[expr48]'
+            'redundantAttribute': 'expr53',
+            'selector': '[expr53]'
           }, {
             'type': bindingTypes.TAG,
             'getComponent': getComponent,
@@ -126,8 +137,8 @@ riot.register('app',{
 
             'slots': [],
             'attributes': [],
-            'redundantAttribute': 'expr49',
-            'selector': '[expr49]'
+            'redundantAttribute': 'expr54',
+            'selector': '[expr54]'
           }]
         )
       }]
@@ -142,15 +153,21 @@ riot.register('login',{
 
   'exports': {
     state: {
-        message: ''
+        message: '',
+        subscription: null
     },
 
     onMounted(props, state) {
-        this.query.select('lastLoginError').subscribe(val => {
+        const sub = this.query.select('lastLoginError').subscribe(val => {
             this.update({
                 message: val
             });
         });
+        this.state.subscription = sub;
+    },
+
+    onUnmounted(props,state){
+        this.state.subscription.unsubscribe();
     },
 
     inputKeyup(e) {
@@ -182,10 +199,10 @@ riot.register('login',{
 
   'template': function(template, expressionTypes, bindingTypes, getComponent) {
     return template(
-      '<div class="container"><div class="row justify-content-center"><div class="col-xl-10 col-lg-12 col-md-9"><div class="card o-hidden border-0 shadow-lg my-5"><div class="card-body p-0"><div class="row"><div class="col-lg-12"><div class="p-5"><div class="text-center"><h1 class="h4 text-gray-900 mb-2">Admin App Example</h1><h5>Riot + Akita + Navigo + Axios</h5><br/></div><form class="user"><div class="form-group"><input expr59 type="email" id="username" class="form-control form-control-user" placeholder="Enter Username (Type Anything)"/></div><div class="form-group"><input expr60 type="password" id="password" class="form-control form-control-user" placeholder="Enter Password (Type Anything)"/></div><div class="form-group"><div class="custom-control custom-checkbox small"><input type="checkbox" class="custom-control-input" id="customCheck"/><label class="custom-control-label" for="customCheck">Remember\n                                                    Me</label></div></div><button expr61 class="btn btn-primary btn-user btn-block">\n                                            Login\n                                        </button></form><hr/><label expr62 class="text-xs font-weight-bold text-danger text-uppercase mb-1"><!----></label></div></div></div></div></div></div></div></div>',
+      '<div class="container"><div class="row justify-content-center"><div class="col-xl-10 col-lg-12 col-md-9"><div class="card o-hidden border-0 shadow-lg my-5"><div class="card-body p-0"><div class="row"><div class="col-lg-12"><div class="p-5"><div class="text-center"><h1 class="h4 text-gray-900 mb-2">Admin App Example</h1><h5>Riot + Akita + Navigo + Axios</h5><br/></div><form class="user"><div class="form-group"><input expr55 type="email" id="username" class="form-control form-control-user" placeholder="Enter Username (Type Anything)"/></div><div class="form-group"><input expr56 type="password" id="password" class="form-control form-control-user" placeholder="Enter Password (Type Anything)"/></div><div class="form-group"><div class="custom-control custom-checkbox small"><input type="checkbox" class="custom-control-input" id="customCheck"/><label class="custom-control-label" for="customCheck">Remember\n                                                    Me</label></div></div><button expr57 class="btn btn-primary btn-user btn-block">\n                                            Login\n                                        </button></form><hr/><label expr58 class="text-xs font-weight-bold text-danger text-uppercase mb-1"><!----></label></div></div></div></div></div></div></div></div>',
       [{
-        'redundantAttribute': 'expr59',
-        'selector': '[expr59]',
+        'redundantAttribute': 'expr55',
+        'selector': '[expr55]',
 
         'expressions': [{
           'type': expressionTypes.EVENT,
@@ -196,8 +213,8 @@ riot.register('login',{
           }
         }]
       }, {
-        'redundantAttribute': 'expr60',
-        'selector': '[expr60]',
+        'redundantAttribute': 'expr56',
+        'selector': '[expr56]',
 
         'expressions': [{
           'type': expressionTypes.EVENT,
@@ -208,8 +225,8 @@ riot.register('login',{
           }
         }]
       }, {
-        'redundantAttribute': 'expr61',
-        'selector': '[expr61]',
+        'redundantAttribute': 'expr57',
+        'selector': '[expr57]',
 
         'expressions': [{
           'type': expressionTypes.EVENT,
@@ -220,8 +237,8 @@ riot.register('login',{
           }
         }]
       }, {
-        'redundantAttribute': 'expr62',
-        'selector': '[expr62]',
+        'redundantAttribute': 'expr58',
+        'selector': '[expr58]',
 
         'expressions': [{
           'type': expressionTypes.TEXT,
@@ -243,7 +260,8 @@ riot.register('sidebar',{
 
   'exports': {
     state : {
-        page: 'dashboard'
+        page: 'dashboard',
+        subscription: null
     },
 
     onBeforeMount(props, state) {
@@ -251,6 +269,14 @@ riot.register('sidebar',{
     },
 
     onMounted(props, state) {
+        const sub = this.query.select('page').subscribe((val)=>{
+            this.update({page:val});
+        });
+        this.state.subscription = sub;
+    },
+
+    onUnmounted(props,state){
+        this.state.subscription.unsubscribe();
     },
 
     menuClicked(pageName){
@@ -272,10 +298,10 @@ riot.register('sidebar',{
 
   'template': function(template, expressionTypes, bindingTypes, getComponent) {
     return template(
-      '<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar"><a class="sidebar-brand d-flex align-items-center justify-content-center" href="#/dashboard"><div class="sidebar-brand-icon"><i class="fa fa-user"></i></div><div class="sidebar-brand-text mx-3">Admin</div></a><div class="sidebar-heading">\n            Menu\n        </div><hr class="sidebar-divider my-0"/><li expr50 class="nav-item"><a class="nav-link"><i class="fa fa-tachometer-alt"></i><span>Dashboard</span></a></li><li expr51 class="nav-item"><a class="nav-link"><i class="fa fa-database"></i><span>List</span></a></li><li expr52 class="nav-item"><a class="nav-link"><i class="fa fa-cog"></i><span>Settings</span></a></li><hr class="sidebar-divider"/><li expr53 class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a></li><hr class="sidebar-divider d-none d-md-block"/><div expr54 class="text-center d-none d-md-inline"><button class="rounded-circle border-0" id="sidebarToggle"></button></div></ul>',
+      '<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar"><a class="sidebar-brand d-flex align-items-center justify-content-center" href="#/dashboard"><div class="sidebar-brand-icon"><i class="fa fa-user"></i></div><div class="sidebar-brand-text mx-3">Admin</div></a><div class="sidebar-heading">\n            Menu\n        </div><hr class="sidebar-divider my-0"/><li expr59 class="nav-item"><a class="nav-link"><i expr60></i><span>Dashboard</span></a></li><li expr61 class="nav-item"><a class="nav-link"><i expr62></i><span>List</span></a></li><li expr63 class="nav-item"><a class="nav-link"><i expr64></i><span>Settings</span></a></li><hr class="sidebar-divider"/><li expr65 class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a></li><hr class="sidebar-divider d-none d-md-block"/><div expr66 class="text-center d-none d-md-inline"><button class="rounded-circle border-0" id="sidebarToggle"></button></div></ul>',
       [{
-        'redundantAttribute': 'expr50',
-        'selector': '[expr50]',
+        'redundantAttribute': 'expr59',
+        'selector': '[expr59]',
 
         'expressions': [{
           'type': expressionTypes.EVENT,
@@ -286,8 +312,23 @@ riot.register('sidebar',{
           }
         }]
       }, {
-        'redundantAttribute': 'expr51',
-        'selector': '[expr51]',
+        'redundantAttribute': 'expr60',
+        'selector': '[expr60]',
+
+        'expressions': [{
+          'type': expressionTypes.ATTRIBUTE,
+          'name': 'class',
+
+          'evaluate': function(scope) {
+            return [
+              'fa fa-tachometer-alt ',
+              scope.state.page=='page-dashboard' ? 'text-white' : ''
+            ].join('');
+          }
+        }]
+      }, {
+        'redundantAttribute': 'expr61',
+        'selector': '[expr61]',
 
         'expressions': [{
           'type': expressionTypes.EVENT,
@@ -298,8 +339,20 @@ riot.register('sidebar',{
           }
         }]
       }, {
-        'redundantAttribute': 'expr52',
-        'selector': '[expr52]',
+        'redundantAttribute': 'expr62',
+        'selector': '[expr62]',
+
+        'expressions': [{
+          'type': expressionTypes.ATTRIBUTE,
+          'name': 'class',
+
+          'evaluate': function(scope) {
+            return ['fa fa-database ', scope.state.page=='page-list' ? 'text-white' : ''].join('');
+          }
+        }]
+      }, {
+        'redundantAttribute': 'expr63',
+        'selector': '[expr63]',
 
         'expressions': [{
           'type': expressionTypes.EVENT,
@@ -310,8 +363,20 @@ riot.register('sidebar',{
           }
         }]
       }, {
-        'redundantAttribute': 'expr53',
-        'selector': '[expr53]',
+        'redundantAttribute': 'expr64',
+        'selector': '[expr64]',
+
+        'expressions': [{
+          'type': expressionTypes.ATTRIBUTE,
+          'name': 'class',
+
+          'evaluate': function(scope) {
+            return ['fa fa-cog ', scope.state.page=='page-settings' ? 'text-white' : ''].join('');
+          }
+        }]
+      }, {
+        'redundantAttribute': 'expr65',
+        'selector': '[expr65]',
 
         'expressions': [{
           'type': expressionTypes.EVENT,
@@ -322,8 +387,8 @@ riot.register('sidebar',{
           }
         }]
       }, {
-        'redundantAttribute': 'expr54',
-        'selector': '[expr54]',
+        'redundantAttribute': 'expr66',
+        'selector': '[expr66]',
 
         'expressions': [{
           'type': expressionTypes.EVENT,
@@ -346,19 +411,29 @@ riot.register('top-section',{
   'exports': {
     state: {
       count: 0,
-      user: {}
+      user: {},
+      subscription:null
     },
 
     onMounted(props, state) {
-      this.query.select('user').subscribe(user => {
+      const sub = this.query.select('user').subscribe(user => {
         this.update({
           user: user
         });
       });
+      this.state.subscription = sub;
+    },
+
+    onUnmounted(props,state){
+      this.state.subscription.unsubscribe();
     },
 
     profileClicked() {
-      alert(this.state.user.name + ' (' + this.state.user.uname + ')');
+      alert(this.state.user.name + ' (' + this.state.user.username + ')');
+    },
+
+    searchClicked(){
+      alert('search clicked');
     },
 
     logoutClicked() {
@@ -370,10 +445,22 @@ riot.register('top-section',{
 
   'template': function(template, expressionTypes, bindingTypes, getComponent) {
     return template(
-      '<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3"><i class="fa fa-bars"></i></button><form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"><div class="input-group"><input type="text" class="form-control bg-light border-0 small" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2"/><div class="input-group-append"><button class="btn btn-primary" type="button"><i class="fas fa-search fa-sm"></i></button></div></div></form><ul class="navbar-nav ml-auto"><li class="nav-item dropdown no-arrow d-sm-none"><a expr55 class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-search fa-fw"></i></a><div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown"><form class="form-inline mr-auto w-100 navbar-search"><div class="input-group"><input id="search" type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2"/><div class="input-group-append"><button id="btnSearch" class="btn btn-primary" type="button"><i class="fas fa-search fa-sm"></i></button></div></div></form></div></li><li class="nav-item dropdown no-arrow"><a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span expr56 class="mr-2 d-none d-lg-inline text-gray-600 small"><!----></span></a><div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown"><a expr57 class="dropdown-item" href="#"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>\n            Profile\n          </a><div class="dropdown-divider"></div><a expr58 class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal"><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>\n            Logout\n          </a></div></li></ul></nav>',
+      '<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3"><i class="fa fa-bars"></i></button><form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"><div class="input-group"><input type="text" class="form-control bg-light border-0 small" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2"/><div class="input-group-append"><button expr67 class="btn btn-primary" type="button"><i class="fas fa-search fa-sm"></i></button></div></div></form><ul class="navbar-nav ml-auto"><li class="nav-item dropdown no-arrow d-sm-none"><a expr68 class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-search fa-fw"></i></a><div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown"><form class="form-inline mr-auto w-100 navbar-search"><div class="input-group"><input id="search" type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2"/><div class="input-group-append"><button id="btnSearch" class="btn btn-primary" type="button"><i class="fas fa-search fa-sm"></i></button></div></div></form></div></li><li class="nav-item dropdown no-arrow"><a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span expr69 class="mr-2 d-none d-lg-inline text-gray-600 small"><!----></span></a><div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown"><a expr70 class="dropdown-item" href="#"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>\n            Profile\n          </a><div class="dropdown-divider"></div><a expr71 class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal"><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>\n            Logout\n          </a></div></li></ul></nav>',
       [{
-        'redundantAttribute': 'expr55',
-        'selector': '[expr55]',
+        'redundantAttribute': 'expr67',
+        'selector': '[expr67]',
+
+        'expressions': [{
+          'type': expressionTypes.EVENT,
+          'name': 'onclick',
+
+          'evaluate': function(scope) {
+            return scope.searchClicked;
+          }
+        }]
+      }, {
+        'redundantAttribute': 'expr68',
+        'selector': '[expr68]',
 
         'expressions': [{
           'type': expressionTypes.EVENT,
@@ -384,8 +471,8 @@ riot.register('top-section',{
           }
         }]
       }, {
-        'redundantAttribute': 'expr56',
-        'selector': '[expr56]',
+        'redundantAttribute': 'expr69',
+        'selector': '[expr69]',
 
         'expressions': [{
           'type': expressionTypes.TEXT,
@@ -403,8 +490,8 @@ riot.register('top-section',{
           }
         }]
       }, {
-        'redundantAttribute': 'expr57',
-        'selector': '[expr57]',
+        'redundantAttribute': 'expr70',
+        'selector': '[expr70]',
 
         'expressions': [{
           'type': expressionTypes.EVENT,
@@ -415,8 +502,8 @@ riot.register('top-section',{
           }
         }]
       }, {
-        'redundantAttribute': 'expr58',
-        'selector': '[expr58]',
+        'redundantAttribute': 'expr71',
+        'selector': '[expr71]',
 
         'expressions': [{
           'type': expressionTypes.EVENT,
@@ -452,21 +539,27 @@ riot.register('breadcrumb',{
 
   'exports': {
     state:{
-        breadcrumb:[]
+        breadcrumb:[],
+        subscription:null
     },
 
     onMounted(props,state){
-        this.query.select('breadcrumb').subscribe(data => this.update({breadcrumb:data}));
+        const sub = this.query.select('breadcrumb').subscribe(data => this.update({breadcrumb:data}));
+        this.state.subscription = sub;
     },
 
     goBack(popCount){
         this.service.popBreadcrumb(popCount);
+    },
+
+    onUnmounted(props,state){
+        this.state.subscription.unsubscribe();
     }
   },
 
   'template': function(template, expressionTypes, bindingTypes, getComponent) {
     return template(
-      '<div class="d-sm-flex mb-4"><a expr63 href="/#/list/"></a><a expr64></a><span expr65></span></div>',
+      '<div class="d-sm-flex mb-4"><a expr72 href="/#/list/"></a><a expr73></a><span expr74></span></div>',
       [{
         'type': bindingTypes.IF,
 
@@ -474,8 +567,8 @@ riot.register('breadcrumb',{
           return scope.state.breadcrumb.length > 0;
         },
 
-        'redundantAttribute': 'expr63',
-        'selector': '[expr63]',
+        'redundantAttribute': 'expr72',
+        'selector': '[expr72]',
 
         'template': template('List Page', [{
           'expressions': [{
@@ -494,23 +587,23 @@ riot.register('breadcrumb',{
           return scope.state.breadcrumb.length == 0;
         },
 
-        'redundantAttribute': 'expr64',
-        'selector': '[expr64]',
+        'redundantAttribute': 'expr73',
+        'selector': '[expr73]',
         'template': template('List Page', [])
       }, {
         'type': bindingTypes.EACH,
         'getKey': null,
         'condition': null,
 
-        'template': template('<span class="ml-1 mr-1">&gt;</span><a expr66></a><a expr67></a>', [{
+        'template': template('<span class="ml-1 mr-1">&gt;</span><a expr75></a><a expr76></a>', [{
           'type': bindingTypes.IF,
 
           'evaluate': function(scope) {
             return scope.index < scope.state.breadcrumb.length-1;
           },
 
-          'redundantAttribute': 'expr66',
-          'selector': '[expr66]',
+          'redundantAttribute': 'expr75',
+          'selector': '[expr75]',
 
           'template': template('<!---->', [{
             'expressions': [{
@@ -543,8 +636,8 @@ riot.register('breadcrumb',{
             return scope.index == scope.state.breadcrumb.length-1;
           },
 
-          'redundantAttribute': 'expr67',
-          'selector': '[expr67]',
+          'redundantAttribute': 'expr76',
+          'selector': '[expr76]',
 
           'template': template('<!---->', [{
             'expressions': [{
@@ -558,8 +651,8 @@ riot.register('breadcrumb',{
           }])
         }]),
 
-        'redundantAttribute': 'expr65',
-        'selector': '[expr65]',
+        'redundantAttribute': 'expr74',
+        'selector': '[expr74]',
         'itemName': 'item',
         'indexName': 'index',
 
@@ -591,21 +684,37 @@ riot.register('page-list',{
   'css': null,
 
   'exports': {
+    state:{
+        list:[],
+        subscription: null
+    },
+
     async onMounted(props,state){
-        await this.service.getList();
-        this.query.select('list').subscribe(list => this.update({list:list}));
+        // Note: avoid loading fresh list so we can keep .favorite attribute
+        // you can also force reload whenever it's mounted
+        if (this.query.getValue().list.length === 0){
+            await this.service.getList();
+        }
+        const sub = this.query.select('list').subscribe(list => {
+            this.update({list:list})
+        });
+        this.state.subscription = sub;
         this.service.clearBreadcrumb();
     },
 
     itemClicked(item){
         this.service.pushBreadcrumb(item.name,item.id);
         this.router.navigate('/list/' + item.id);
+    },
+
+    onUnmounted(props,state){
+        this.state.subscription.unsubscribe();
     }
   },
 
   'template': function(template, expressionTypes, bindingTypes, getComponent) {
     return template(
-      '<div class="d-sm-flex align-items-center justify-content-between mb-2"><breadcrumb expr68></breadcrumb></div><div class="row"><div class="col-lg-12 mb-4"><div class="card shadow mb-4"><div class="card-header py-3"><h6 class="m-0 font-weight-bold text-primary">List</h6></div><div class="card-body"><table class="table table-hover"><thead><tr><th scope="col">#</th><th scope="col">Name</th><th scope="col">Phone</th><th scope="col">Balance</th></tr></thead><tbody><tr expr69 class="clickable"></tr></tbody></table></div></div></div></div>',
+      '<div class="d-sm-flex align-items-center justify-content-between mb-2"><breadcrumb expr77></breadcrumb></div><div class="row"><div class="col-lg-12 mb-4"><div class="card shadow mb-4"><div class="card-header py-3"><h6 class="m-0 font-weight-bold text-primary">List</h6></div><div class="card-body"><table class="table table-hover"><thead><tr><th scope="col">#</th><th scope="col">Name</th><th scope="col">Phone</th><th scope="col">Balance</th><th scope="col" class="text-center">Favorite</th></tr></thead><tbody><tr expr78 class="clickable"></tr></tbody></table></div></div></div></div>',
       [{
         'type': bindingTypes.TAG,
         'getComponent': getComponent,
@@ -616,15 +725,15 @@ riot.register('page-list',{
 
         'slots': [],
         'attributes': [],
-        'redundantAttribute': 'expr68',
-        'selector': '[expr68]'
+        'redundantAttribute': 'expr77',
+        'selector': '[expr77]'
       }, {
         'type': bindingTypes.EACH,
         'getKey': null,
         'condition': null,
 
         'template': template(
-          '<th expr70 scope="row"><!----></th><td expr71><!----></td><td expr72><!----></td><td expr73><!----></td>',
+          '<th expr79 scope="row"><!----></th><td expr80><!----></td><td expr81><!----></td><td expr82><!----></td><td class="text-center"><i expr83></i></td>',
           [{
             'expressions': [{
               'type': expressionTypes.EVENT,
@@ -635,8 +744,8 @@ riot.register('page-list',{
               }
             }]
           }, {
-            'redundantAttribute': 'expr70',
-            'selector': '[expr70]',
+            'redundantAttribute': 'expr79',
+            'selector': '[expr79]',
 
             'expressions': [{
               'type': expressionTypes.TEXT,
@@ -647,8 +756,8 @@ riot.register('page-list',{
               }
             }]
           }, {
-            'redundantAttribute': 'expr71',
-            'selector': '[expr71]',
+            'redundantAttribute': 'expr80',
+            'selector': '[expr80]',
 
             'expressions': [{
               'type': expressionTypes.TEXT,
@@ -659,8 +768,8 @@ riot.register('page-list',{
               }
             }]
           }, {
-            'redundantAttribute': 'expr72',
-            'selector': '[expr72]',
+            'redundantAttribute': 'expr81',
+            'selector': '[expr81]',
 
             'expressions': [{
               'type': expressionTypes.TEXT,
@@ -671,8 +780,8 @@ riot.register('page-list',{
               }
             }]
           }, {
-            'redundantAttribute': 'expr73',
-            'selector': '[expr73]',
+            'redundantAttribute': 'expr82',
+            'selector': '[expr82]',
 
             'expressions': [{
               'type': expressionTypes.TEXT,
@@ -682,11 +791,23 @@ riot.register('page-list',{
                 return scope.item.balance;
               }
             }]
+          }, {
+            'redundantAttribute': 'expr83',
+            'selector': '[expr83]',
+
+            'expressions': [{
+              'type': expressionTypes.ATTRIBUTE,
+              'name': 'class',
+
+              'evaluate': function(scope) {
+                return ['fas fa-star ', (scope.item.favorite === true) ? ' ' : 'text-white-50'].join('');
+              }
+            }]
           }]
         ),
 
-        'redundantAttribute': 'expr69',
-        'selector': '[expr69]',
+        'redundantAttribute': 'expr78',
+        'selector': '[expr78]',
         'itemName': 'item',
         'indexName': null,
 
@@ -705,26 +826,45 @@ riot.register('page-details',{
 
   'exports': {
     state: {
-        item:{}
+        item:{},
+        subParam:null,
+        subList:null
     },
 
     onMounted(props,state){
-        this.query.select('details').subscribe(details=> {
-            if (details){
-                this.update({item:details});
-            }
+        const subList = this.query.select('list').subscribe(list=> {
+            //console.log('list changed',list);
+            const id = parseInt(this.query.getValue().params.id);
+            const item = list.find(item=>item.id === id);
+            this.update({item:item});
         });
-        this.query.select('params').subscribe(params=>{
-            if (params){
-                this.service.getDetails(params.id);
-            }
+        this.state.subList = subList;
+
+        const subParam = this.query.select('params').subscribe(params=>{
+            this.service.getDetails(parseInt(params.id));
         });
+        this.state.subParam = subParam;
+    },
+
+    reflect(){
+        this.update();
+    },
+
+    toggleFavorite(){
+        // Note: ".favorite" property is omitted in .json files in order to simulate persistante
+        // otherwise, server value will wipe when you go back
+        this.service.updateFavorite(parseInt(this.state.item.id), !this.state.item.favorite);
+    },
+
+    onUnmounted(props,state){
+        this.state.subList.unsubscribe();
+        this.state.subParam.unsubscribe();
     }
   },
 
   'template': function(template, expressionTypes, bindingTypes, getComponent) {
     return template(
-      '<div class="d-sm-flex align-items-center justify-content-between mb-2"><breadcrumb expr74></breadcrumb><a expr75 href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i expr76></i> Acitive</a></div><div class="row"><div class="col-lg-12 mb-4"><div class="card shadow mb-4"><div class="card-header py-3"><h6 expr77 class="m-0 font-weight-bold text-primary"><!----></h6></div><div expr78 class="card-body"><!----><br/><!----><br/><!----><br/><!----><br/><!----><br/><!----><br/>\n                    Friends: \n                    <span expr79></span><br/><hr/><span expr82 each="tag in state.item.tags" class="badge badge-primary mr-2"></span></div></div></div></div>',
+      '<div class="d-sm-flex align-items-center justify-content-between mb-2"><breadcrumb expr84></breadcrumb><a expr85 href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i expr86></i> Favorite</a></div><div class="row"><div class="col-lg-12 mb-4"><div class="card shadow mb-4"><div class="card-header py-3"><h6 expr87 class="m-0 font-weight-bold text-primary"><!----></h6></div><div expr88 class="card-body"><!----><br/><!----><br/><!----><br/><!----><br/><!----><br/><!----><br/>\n                    Friends: \n                    <span expr89></span><br/><hr/><span expr92 each="tag in state.item.tags" class="badge badge-primary mr-2"></span></div></div></div></div>',
       [{
         'type': bindingTypes.TAG,
         'getComponent': getComponent,
@@ -735,35 +875,38 @@ riot.register('page-details',{
 
         'slots': [],
         'attributes': [],
-        'redundantAttribute': 'expr74',
-        'selector': '[expr74]'
+        'redundantAttribute': 'expr84',
+        'selector': '[expr84]'
       }, {
-        'redundantAttribute': 'expr75',
-        'selector': '[expr75]',
+        'redundantAttribute': 'expr85',
+        'selector': '[expr85]',
 
         'expressions': [{
           'type': expressionTypes.EVENT,
           'name': 'onclick',
 
           'evaluate': function(scope) {
-            return ()=>alert('not implemented yet');
+            return scope.toggleFavorite;
           }
         }]
       }, {
-        'redundantAttribute': 'expr76',
-        'selector': '[expr76]',
+        'redundantAttribute': 'expr86',
+        'selector': '[expr86]',
 
         'expressions': [{
           'type': expressionTypes.ATTRIBUTE,
           'name': 'class',
 
           'evaluate': function(scope) {
-            return ['fas fa-star fa-sm ', scope.state.item.isActive ? 'text-white-50' : ''].join('');
+            return [
+              'fas fa-star fa-sm ',
+              (scope.state.item.favorite === true) ? ' ' : 'text-white-50'
+            ].join('');
           }
         }]
       }, {
-        'redundantAttribute': 'expr77',
-        'selector': '[expr77]',
+        'redundantAttribute': 'expr87',
+        'selector': '[expr87]',
 
         'expressions': [{
           'type': expressionTypes.TEXT,
@@ -774,8 +917,8 @@ riot.register('page-details',{
           }
         }]
       }, {
-        'redundantAttribute': 'expr78',
-        'selector': '[expr78]',
+        'redundantAttribute': 'expr88',
+        'selector': '[expr88]',
 
         'expressions': [{
           'type': expressionTypes.TEXT,
@@ -825,9 +968,9 @@ riot.register('page-details',{
         'getKey': null,
         'condition': null,
 
-        'template': template('<a expr80 class="ml-1"><!----></a><span expr81></span>', [{
-          'redundantAttribute': 'expr80',
-          'selector': '[expr80]',
+        'template': template('<a expr90 class="ml-1"><!----></a><span expr91></span>', [{
+          'redundantAttribute': 'expr90',
+          'selector': '[expr90]',
 
           'expressions': [{
             'type': expressionTypes.TEXT,
@@ -858,13 +1001,13 @@ riot.register('page-details',{
             return scope.state.item.friends.length-1 != scope.index;
           },
 
-          'redundantAttribute': 'expr81',
-          'selector': '[expr81]',
+          'redundantAttribute': 'expr91',
+          'selector': '[expr91]',
           'template': template(',', [])
         }]),
 
-        'redundantAttribute': 'expr79',
-        'selector': '[expr79]',
+        'redundantAttribute': 'expr89',
+        'selector': '[expr89]',
         'itemName': 'friend',
         'indexName': 'index',
 
@@ -887,8 +1030,8 @@ riot.register('page-details',{
           }]
         }]),
 
-        'redundantAttribute': 'expr82',
-        'selector': '[expr82]',
+        'redundantAttribute': 'expr92',
+        'selector': '[expr92]',
         'itemName': 'tag',
         'indexName': null,
 
