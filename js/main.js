@@ -3,7 +3,7 @@ import Service from './service.js';
 
 // Initializing App
 const config = {
-  baseUrl: '/api/'
+  baseUrl: '/data/'
 };
 
 // Alias
