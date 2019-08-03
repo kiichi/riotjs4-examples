@@ -25,7 +25,7 @@
                     Balance: {state.item.balance}<br/>
                     Friends: 
                     <span each="{ (friend,index) in state.item.friends}">
-                        <a href="/#/list/{friend.id}" onclick="{()=>service.pushBreadcrumb(friend.name,friend.id)}" class="ml-1">{friend.name}</a>
+                        <a href="#/list/{friend.id}" onclick="{()=>service.pushBreadcrumb(friend.name,friend.id)}" class="ml-1">{friend.name}</a>
                         <span if="{state.item.friends.length-1 != index}">,</span>
                     </span>
                     <br/>
@@ -55,9 +55,6 @@
                     this.service.getDetails(parseInt(params.id));
                 });
                 this.state.subParam = subParam;
-            },
-            reflect(){
-                this.update();
             },
             toggleFavorite(){
                 // Note: ".favorite" property is omitted in .json files in order to simulate persistante
