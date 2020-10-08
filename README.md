@@ -124,6 +124,10 @@ this.state.subscription = sub;
 
 - [Parent / Child](https://next.plnkr.co/edit/REbhuA3qDA0WZuju?preview) - Using "is" syntac, created a simple nested tags. It's Base component and dynamically switching inner components.
 
+### Variations
+
+- [ganesankar/riot-dashboard-standalone: RiotJs Dashboard Standalone](https://github.com/ganesankar/riot-dashboard-standalone) 
+
 ### Other Riot4 projects
 
 - [damusix/riot-4-boilerplate: A complete starting point for Riot 4](https://github.com/damusix/riot-4-boilerplate)
